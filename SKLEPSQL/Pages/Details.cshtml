@@ -1,0 +1,21 @@
+﻿@page
+@model SKLEPSQL.Pages.DetalisModel
+@{
+    ViewData["Title"] = "Szczegóły - ";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <form method="post" class="form-horizontal">
+        <input asp-for="prod.id" type="hidden" disabled/> 
+        <div>Nazwa: @Model.prod.name</div>
+        <div>Cena:  @Model.prod.price</div></br>
+        
+        <button type="submit"  class="btn btn btn-primary">Dodaj do Koszyka</button>
+    </form>
+</body>
+</html>

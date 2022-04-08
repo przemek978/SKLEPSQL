@@ -1,0 +1,45 @@
+﻿@page
+@model SKLEPSQL.Pages.CreateModel
+@{
+    ViewData["Title"] = "Dodawanie produktu - ";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+   
+</head>
+<body>
+    <h2>Nowy produkt</h2>
+    <br /><br />
+     <div class="container">
+        <form class="form-horizontal" method="post">
+            <div class="form-group">
+                <label asp-for="newProduct.name" class="control-label col-sm2"></label>
+                <div class="col-sm-6">
+                    <input asp-for="newProduct.name" class="form-control">
+                </div>
+               <span asp-validation-for="newProduct.name" class="text-danger"></span><br />
+            </div>
+            <div class="form-group">
+                <label asp-for="newProduct.price" class="control-label col-sm2"></label>
+                <div class="col-sm-6">
+                    <input asp-for="newProduct.price" class="form-control">
+                </div>
+               <span asp-validation-for="newProduct.price" class="text-danger"></span><br />
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button class="btn btn btn-primary">Zatwierdź</button>
+                </div>
+            </div>
+        </form>
+     </div>
+
+    <!--<h1 align="center">Witaj</h1></br>
+    <form method="post">
+        <input type="submit" class="rp" value="ROZPOCZNIJ" />
+    </form>-->
+</body>
+</html>
