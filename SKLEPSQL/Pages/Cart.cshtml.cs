@@ -27,26 +27,8 @@ namespace SKLEPSQL.Pages
         {
 
             var cookieValue = Request.Cookies["Cart"];
-            int LastID;
-            Product product;
-            ///ODCZYT BAZY/////////////////////////////////////////////////////////////
-            string newcook = "";
-            var productList = new List<Product>();
-            string myCompanyDBcs = _configuration.GetConnectionString("myCompanyDB");
-            SqlConnection con = new SqlConnection(myCompanyDBcs);
-            string sql = "SELECT * FROM Product";
-            SqlCommand cmd = new SqlCommand(sql, con);
-            con.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                product = new Product(Int32.Parse(reader["Id"].ToString()), reader.GetString(1), Decimal.Parse(reader["Price"].ToString()));
-                productList.Add(product);
-                LastID = Int32.Parse(reader["Id"].ToString());
-            }
-            reader.Close();
-            con.Close();
-            //////////////////////////////////////////////////////////////////////////////
+            //Product product;
+            productList = DataBase.Read(_configuration);
             ilosci = new int[productList.Count + 1];
             if (cookieValue != null)
             {

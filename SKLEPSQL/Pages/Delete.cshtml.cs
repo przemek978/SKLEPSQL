@@ -11,6 +11,7 @@ namespace SKLEPSQL.Pages
 {
     public class DeleteModel : PageModel
     {
+        ////////////////////////////////////////////////////////////////////////////////////////
         public IConfiguration _configuration { get; }
         private ILogger<DeleteModel> _logger;
         public DeleteModel(IConfiguration configuration, ILogger<DeleteModel> logger)
@@ -18,12 +19,13 @@ namespace SKLEPSQL.Pages
             _configuration = configuration;
             _logger = logger;
         }
+        ////////////////////////////////////////////////////////////////////////////////////////
         [FromQuery(Name = "id")]
         public int id { get; set; }
         public int LastID { get; set; }
-        public Product product { get; set; }
         [BindProperty]
         public Product Product { get; set; }
+        public List<Product> productList;
         public IActionResult OnGet(int id)
         {
             string myCompanyDBcs = _configuration.GetConnectionString("myCompanyDB");
@@ -63,24 +65,9 @@ namespace SKLEPSQL.Pages
         public void updatecook(int id)
         {
             var cookieValue = Request.Cookies["Cart"];
-            ///ODCZYT BAZY/////////////////////////////////////////////////////////////
             string newcook = "";
-            var productList = new List<Product>();
-            string myCompanyDBcs = _configuration.GetConnectionString("myCompanyDB");
-            SqlConnection con = new SqlConnection(myCompanyDBcs);
-            string sql = "SELECT * FROM Product";
-            SqlCommand cmd = new SqlCommand(sql, con);
-            con.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                product = new Product(Int32.Parse(reader["Id"].ToString()), reader.GetString(1), Decimal.Parse(reader["Price"].ToString()));
-                productList.Add(product);
-                LastID = Int32.Parse(reader["Id"].ToString());
-            }
-            reader.Close();
-            con.Close();
-            //////////////////////////////////////////////////////////////////////////////
+            productList = DataBase.Read(_configuration); 
+            
             var ilosci = new int[productList.Count + 2];
             var pr = productList;
             int i =0,j=0;

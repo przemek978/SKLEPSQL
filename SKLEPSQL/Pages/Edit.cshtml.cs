@@ -19,8 +19,11 @@ namespace SKLEPSQL.Pages
         [FromQuery(Name="id")]
         public int id { get; set; }
         [BindProperty]
-        public Product prod { get; set; }
         public Product Product { get; set; }
+        public void OnGet()
+        {
+            Product = DataBase.Read(_configuration)[id-1];
+        }
         public IActionResult OnPost(Product p)
         {
             string myCompanyDBcs = _configuration.GetConnectionString("myCompanyDB");

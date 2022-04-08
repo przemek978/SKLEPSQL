@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using SKLEPSQL.DAL;
 using SKLEPSQL.Models;
 using System;
 using System.Data.SqlClient;
@@ -38,7 +37,7 @@ namespace SKLEPSQL.Pages
             String sql = "";
             sql = "Insert into Product(ID,Name,Price) values(@ID,@Name,@Price)";
             cmd = new SqlCommand(sql, con);
-            adapter.InsertCommand = cmd; //new SqlCommand(sql, con);
+            adapter.InsertCommand = cmd;
             cmd.Parameters.AddWithValue("@ID", id+1);
             cmd.Parameters.AddWithValue("@Name", newProduct.name);
             cmd.Parameters.AddWithValue("@Price", newProduct.price);

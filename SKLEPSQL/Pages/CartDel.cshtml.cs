@@ -3,29 +3,53 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using SKLEPSQL.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace SKLEPSQL.Pages
 {
-    public class CartDelModel : MyPageModel
+    public class CartDelModel : PageModel
     {
+        public IConfiguration _configuration { get; }
+        private readonly ILogger<CartDelModel> _logger;
+        public CartDelModel(IConfiguration configuration, ILogger<CartDelModel> logger)
+        {
+            _configuration = configuration;
+            _logger = logger;
+        }
         [FromQuery(Name = "id")]
         public int id { get; set; }
-        public List<Product> products;
-        public Product prod { get; set; }
+        public List<Product> productList;
+        public List<Product> productC;
+        public Product product { get; set; }
         public int[] ilosci;
         public decimal suma = 0;
-
-        public CartDelModel(IConfiguration configuration, ILogger<MyPageModel> logger) : base(configuration, logger)
-        {
-        }
 
         public IActionResult OnGet()
         {
             //LoadDB();
             var cookieValue = Request.Cookies["Cart"];
-            string newcook="";
-            ilosci = new int[productDB.products.Count + 1];
+            string newcook = "";
+            productList = DataBase.Read(_configuration);
+            /*///ODCZYT BAZY/////////////////////////////////////////////////////////////
+            productList = new List<Product>();
+            string myCompanyDBcs = _configuration.GetConnectionString("myCompanyDB");
+            SqlConnection con = new SqlConnection(myCompanyDBcs);
+            string sql = "SELECT * FROM Product";
+            SqlCommand cmd = new SqlCommand(sql, con);
+            con.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                product = new Product(Int32.Parse(reader["Id"].ToString()), reader.GetString(1), Decimal.Parse(reader["Price"].ToString()));
+                productList.Add(product);
+                LastID = Int32.Parse(reader["Id"].ToString());
+            }
+            reader.Close();
+            con.Close();
+            /////////////////////////////////////////////////////////////////////////////*/
+            ilosci = new int[productList.Count + 1];
             if (cookieValue != null)
             {
                 for (int i = 0; i < cookieValue.Length; i++)
@@ -35,20 +59,19 @@ namespace SKLEPSQL.Pages
             }
             ilosci[id]--;
             productC = new List<Product>();
-            for (int i = 1; i <= products.Count; i++)
+            for (int i = 1; i <= productList.Count; i++)
             {
                 if (ilosci[i] != 0)
-                    productC.Add(products[i - 1]);
+                    productC.Add(productList[i - 1]);
             }
-            for (int i = 1; i <=products.Count; i++)
+            for (int i = 1; i <=productList.Count; i++)
             {
                 for (int j = 0; j < ilosci[i]; j++)
                 {
-                    newcook += products[i - 1].id.ToString();
+                    newcook += productList[i - 1].id.ToString();
                 }
             }
             Response.Cookies.Append("Cart",newcook);
-            //SaveDB();
             return RedirectToPage("Cart");
         }
     }

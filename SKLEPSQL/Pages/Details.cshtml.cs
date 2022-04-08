@@ -3,26 +3,30 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using SKLEPSQL.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace SKLEPSQL.Pages
 {
-    public class DetalisModel :MyPageModel
+    public class DetalisModel :PageModel
     {
-        public DetalisModel(IConfiguration configuration, ILogger<MyPageModel> logger) : base(configuration, logger)
+        public IConfiguration _configuration { get; }
+        private readonly ILogger<DetalisModel> _logger;
+        public DetalisModel(IConfiguration configuration, ILogger<DetalisModel> logger)
         {
+            _configuration = configuration;
+            _logger = logger;
         }
-
         [FromQuery(Name="id")]
         public int id { get; set; } 
-        public Product prod { get; set; }
         [BindProperty]
-        public Product Product { get; set; }    
+        public Product product { get; set; }
+        public List<Product> productList;
         public void OnGet()
         {
-            LoadDB();
-            prod = productDB.List()[id-1];
-            //SaveDB();
+            productList=DataBase.Read(_configuration);
+            product = productList[id - 1];
         }
         public void OnPost()
         {
@@ -40,10 +44,31 @@ namespace SKLEPSQL.Pages
                 cookieValue += id.ToString();
                 Response.Cookies.Append("Cart", cookieValue);
             }
-            LoadDB();
-            prod = productDB.List()[id - 1];
+            product = DataBase.Read(_configuration)[id - 1];
             return RedirectToPage("List");
         }
+        /*public List<Product> Read()
+        {
+            int LastID;
+            ///ODCZYT BAZY/////////////////////////////////////////////////////////////
+            productList = new List<Product>();
+            string myCompanyDBcs = _configuration.GetConnectionString("myCompanyDB");
+            SqlConnection con = new SqlConnection(myCompanyDBcs);
+            string sql = "SELECT * FROM Product";
+            SqlCommand cmd = new SqlCommand(sql, con);
+            con.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                product = new Product(Int32.Parse(reader["Id"].ToString()), reader.GetString(1), Decimal.Parse(reader["Price"].ToString()));
+                productList.Add(product);
+                LastID = Int32.Parse(reader["Id"].ToString());
+            }
+            reader.Close();
+            con.Close();
+            return productList;
+            //////////////////////////////////////////////////////////////////////////////
+        }*/
 
     }
 }
