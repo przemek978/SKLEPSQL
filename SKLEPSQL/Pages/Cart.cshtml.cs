@@ -27,7 +27,6 @@ namespace SKLEPSQL.Pages
         {
 
             var cookieValue = Request.Cookies["Cart"];
-            //Product product;
             productList = DataBase.Read(_configuration);
             ilosci = new int[productList.Count + 1];
             if (cookieValue != null)

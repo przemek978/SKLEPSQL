@@ -27,6 +27,7 @@ namespace SKLEPSQL.Pages
         public void OnGet()
         {
             productList = DataBase.Read(_configuration);
+            LastID = productList.Count;
         }
 
     }

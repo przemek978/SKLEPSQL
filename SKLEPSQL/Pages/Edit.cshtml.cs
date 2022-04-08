@@ -24,15 +24,19 @@ namespace SKLEPSQL.Pages
         {
             Product = DataBase.Read(_configuration)[id-1];
         }
-        public IActionResult OnPost(Product p)
+        public IActionResult OnPost(Product Product)
         {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
             string myCompanyDBcs = _configuration.GetConnectionString("myCompanyDB");
             SqlConnection con = new SqlConnection(myCompanyDBcs);
             string sql = "UPDATE Product SET name=@NAME, price=@PRICE WHERE id=@ID";
             SqlCommand cmd = new SqlCommand(sql, con);
-            cmd.Parameters.AddWithValue("@ID", p.id);
-            cmd.Parameters.AddWithValue("@NAME", p.name);
-            cmd.Parameters.AddWithValue("@PRICE", p.price);
+            cmd.Parameters.AddWithValue("@ID", id);
+            cmd.Parameters.AddWithValue("@NAME", Product.name);
+            cmd.Parameters.AddWithValue("@PRICE", Product.price);
             con.Open();
             cmd.ExecuteNonQuery();
             con.Close();

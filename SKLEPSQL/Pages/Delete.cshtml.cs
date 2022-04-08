@@ -32,10 +32,10 @@ namespace SKLEPSQL.Pages
             SqlConnection con = new SqlConnection(myCompanyDBcs);
             SqlCommand cmd;
             SqlDataAdapter adapter = new SqlDataAdapter();
-            String sql = "";
+            string sql;
             sql = "Delete from Product where id= @ID";
             cmd = new SqlCommand(sql, con);
-            adapter.DeleteCommand = cmd; //new SqlCommand(sql, con);
+            adapter.DeleteCommand = cmd;
             cmd.Parameters.AddWithValue("@ID", id);
             con.Open();
             adapter.DeleteCommand.ExecuteNonQuery();
