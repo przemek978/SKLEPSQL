@@ -10,6 +10,7 @@ namespace SKLEPSQL.Pages
 {
     public class CreateModel : PageModel
     {
+        //////////////////////////////////////////////////////////////////////////////////////////
         public IConfiguration _configuration { get; }
         private readonly ILogger<CreateModel> _logger;
         public CreateModel(IConfiguration configuration, ILogger<CreateModel> logger)
@@ -17,6 +18,7 @@ namespace SKLEPSQL.Pages
             _configuration = configuration;
             _logger = logger;
         }
+        //////////////////////////////////////////////////////////////////////////////////////////
         [BindProperty]
         public Product newProduct { get; set; }
         public int id;

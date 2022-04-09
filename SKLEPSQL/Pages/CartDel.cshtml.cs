@@ -11,6 +11,7 @@ namespace SKLEPSQL.Pages
 {
     public class CartDelModel : PageModel
     {
+        //////////////////////////////////////////////////////////////////////////////////////////
         public IConfiguration _configuration { get; }
         private readonly ILogger<CartDelModel> _logger;
         public CartDelModel(IConfiguration configuration, ILogger<CartDelModel> logger)
@@ -18,6 +19,7 @@ namespace SKLEPSQL.Pages
             _configuration = configuration;
             _logger = logger;
         }
+        //////////////////////////////////////////////////////////////////////////////////////////
         [FromQuery(Name = "id")]
         public int id { get; set; }
         public List<Product> productList;
@@ -32,23 +34,6 @@ namespace SKLEPSQL.Pages
             var cookieValue = Request.Cookies["Cart"];
             string newcook = "";
             productList = DataBase.Read(_configuration);
-            /*///ODCZYT BAZY/////////////////////////////////////////////////////////////
-            productList = new List<Product>();
-            string myCompanyDBcs = _configuration.GetConnectionString("myCompanyDB");
-            SqlConnection con = new SqlConnection(myCompanyDBcs);
-            string sql = "SELECT * FROM Product";
-            SqlCommand cmd = new SqlCommand(sql, con);
-            con.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                product = new Product(Int32.Parse(reader["Id"].ToString()), reader.GetString(1), Decimal.Parse(reader["Price"].ToString()));
-                productList.Add(product);
-                LastID = Int32.Parse(reader["Id"].ToString());
-            }
-            reader.Close();
-            con.Close();
-            /////////////////////////////////////////////////////////////////////////////*/
             ilosci = new int[productList.Count + 1];
             if (cookieValue != null)
             {

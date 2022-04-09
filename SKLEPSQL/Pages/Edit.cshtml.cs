@@ -9,6 +9,7 @@ namespace SKLEPSQL.Pages
 {
     public class EditModel : PageModel
     {
+        //////////////////////////////////////////////////////////////////////////////////////////
         public IConfiguration _configuration { get; }
         private readonly ILogger<EditModel> _logger;
         public EditModel(IConfiguration configuration, ILogger<EditModel> logger)
@@ -16,6 +17,7 @@ namespace SKLEPSQL.Pages
             _configuration = configuration;
             _logger = logger;
         }
+        //////////////////////////////////////////////////////////////////////////////////////////
         [FromQuery(Name="id")]
         public int id { get; set; }
         [BindProperty]

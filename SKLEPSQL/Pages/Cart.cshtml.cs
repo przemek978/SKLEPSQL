@@ -12,13 +12,15 @@ namespace SKLEPSQL.Pages
 {
     public class CartModel : PageModel
     {
+        //////////////////////////////////////////////////////////////////////////////////////////////////
         public IConfiguration _configuration { get; }
-        private ILogger<CartModel> _logger;
+        private readonly ILogger<CartModel> _logger;
         public CartModel(IConfiguration configuration, ILogger<CartModel> logger)
         {
             _configuration = configuration;
             _logger = logger;
         }
+        //////////////////////////////////////////////////////////////////////////////////////////////////
         public List<Product> productC;
         public List<Product> productList;
         public int[] ilosci;

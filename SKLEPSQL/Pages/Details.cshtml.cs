@@ -11,6 +11,7 @@ namespace SKLEPSQL.Pages
 {
     public class DetalisModel :PageModel
     {
+        //////////////////////////////////////////////////////////////////////////////////////////
         public IConfiguration _configuration { get; }
         private readonly ILogger<DetalisModel> _logger;
         public DetalisModel(IConfiguration configuration, ILogger<DetalisModel> logger)
@@ -18,6 +19,7 @@ namespace SKLEPSQL.Pages
             _configuration = configuration;
             _logger = logger;
         }
+        //////////////////////////////////////////////////////////////////////////////////////////
         [FromQuery(Name="id")]
         public int id { get; set; } 
         [BindProperty]

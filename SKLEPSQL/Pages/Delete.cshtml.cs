@@ -13,7 +13,7 @@ namespace SKLEPSQL.Pages
     {
         ////////////////////////////////////////////////////////////////////////////////////////
         public IConfiguration _configuration { get; }
-        private ILogger<DeleteModel> _logger;
+        private readonly ILogger<DeleteModel> _logger;
         public DeleteModel(IConfiguration configuration, ILogger<DeleteModel> logger)
         {
             _configuration = configuration;

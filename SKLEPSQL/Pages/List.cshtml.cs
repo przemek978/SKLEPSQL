@@ -12,18 +12,18 @@ namespace SKLEPSQL.Pages
 {
     public class ListModel : PageModel
     {
-        //[BindProperty(SupportsGet = true)]
-        public List<Product> productList { get; set; }
-        public Product product;
-        public int LastID;
+        //////////////////////////////////////////////////////////////////////////////////////////
         public IConfiguration _configuration { get; }
-
         private readonly ILogger<ListModel> _logger;
         public ListModel(IConfiguration configuration, ILogger<ListModel> logger)
         {
             _configuration = configuration;
             _logger = logger;
         }
+        //////////////////////////////////////////////////////////////////////////////////////////
+        public List<Product> productList { get; set; }
+        public Product product;
+        public int LastID;
         public void OnGet()
         {
             productList = DataBase.Read(_configuration);

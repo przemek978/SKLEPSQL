@@ -14,19 +14,20 @@ namespace SKLEPSQL.Pages
 {
     public class IndexModel : PageModel
     {
-        public List<Product> productList { get; set; }
-        private readonly ILogger<IndexModel> _logger;
+        //////////////////////////////////////////////////////////////////////////////////////////
         public IConfiguration _configuration { get; }
+        private readonly ILogger<IndexModel> _logger;
         public IndexModel(IConfiguration configuration, ILogger<IndexModel> logger)
         {
             _logger = logger;
             _configuration = configuration;
         }
+        //////////////////////////////////////////////////////////////////////////////////////////
+        public List<Product> productList { get; set; }
         public Product product { get; set; }
         public IActionResult OnGet()
         {
             return RedirectToPage("List");
-            //lblInfoText = htmlStr.ToString();
         }
         
     }
